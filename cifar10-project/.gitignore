@@ -1,0 +1,17 @@
+# Python
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+.venv/
+venv/
+
+# Données brutes CIFAR-10 (~180 Mo, à télécharger)
+data/raw/*
+!data/raw/.gitkeep
+
+# ResNet50 (~95 Mo, proche de la limite GitHub de 100 Mo)
+models/resnet50/*.keras
+
+# Divers
+.DS_Store
+*.log

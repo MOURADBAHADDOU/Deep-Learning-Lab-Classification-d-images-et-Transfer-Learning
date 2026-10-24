@@ -1,0 +1,6 @@
+model,test_accuracy_percent,test_loss,parameters
+ResNet50,90.17,0.3048,
+CNN C,81.91,0.5242,404330
+CNN B,77.33,0.6917,402986
+CNN A,72.26,0.8415,545098
+MLP,43.36,1.5975,394634
