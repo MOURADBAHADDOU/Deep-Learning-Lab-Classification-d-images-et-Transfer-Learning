@@ -68,7 +68,7 @@ cifar10-model-studio/
 1. Clone this repository:
 
 ```bash
-git clone https://github.com/YOUR-USERNAME/cifar10-model-studio.git
+git clone https://github.com/MOURADBAHADDOU/cifar10-model-studio.git
 cd cifar10-model-studio
 ```
 
