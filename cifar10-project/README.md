@@ -28,6 +28,10 @@ Five models are trained and evaluated:
 
 ResNet50 achieved the highest test accuracy among the five evaluated models in our experiments.
 
+![Test accuracy comparison](results/figures/comparison/model_comparison.png)
+
+Training curves, example predictions, error analysis and the ResNet50 confusion matrix are available in [`results/figures/`](results/figures/).
+
 ## Application Features
 
 - Upload an image and obtain a predicted class
@@ -56,8 +60,21 @@ The dataset is divided into 50,000 training images and 10,000 test images.
 
 ```text
 cifar10-model-studio/
-├── app.py
-├── cifar10_model_training.ipynb
+├── notebooks/
+│   └── cifar10_model_training_ipynb.ipynb   # training, evaluation, comparison
+├── app/
+│   └── app.py                               # Streamlit application
+├── data/
+│   └── raw/cifar-10-batches-py/             # CIFAR-10 files (not versioned)
+├── models/
+│   ├── mlp/                                 # model_mlp.keras
+│   ├── cnn_a/                               # cnn_a_cifar10.keras
+│   ├── cnn_b/                               # cnn_bifar10.keras
+│   ├── cnn_c/                               # cnn_cifar10.keras
+│   └── resnet50/                            # resnet50_cifar10.keras (not versioned)
+├── results/
+│   ├── figures/                             # curves, predictions, confusion matrix
+│   └── metrics/                             # histories, metrics, summary CSV
 ├── requirements.txt
 ├── README.md
 └── .gitignore
@@ -78,13 +95,33 @@ cd cifar10-model-studio
 pip install -r requirements.txt
 ```
 
+3. Download CIFAR-10 (Python version) from https://www.cs.toronto.edu/~kriz/cifar.html and place it in `data/raw/cifar-10-batches-py/` (see [`data/README.md`](data/README.md)). This is only needed to run the notebook.
+
+## Run the Notebook
+
+Open `notebooks/cifar10_model_training_ipynb.ipynb` **from the `notebooks/` folder**, because the code uses relative paths (`../data`, `../models`, `../results`). Trained models, metrics and figures are written to `models/` and `results/`.
+
+On Google Colab, clone the repository and run `%cd cifar10-model-studio/notebooks` before executing the cells. The `drive.mount`, `files.download` and ngrok cells are only meant for Colab.
+
 ## Run the Application
 
+From the root of the project:
+
 ```bash
-streamlit run app.py
+streamlit run app/app.py
 ```
 
-**Important:** The trained model files must be available at the locations expected by `app.py`. They are not included in this repository by default. The application will need access to those files to run predictions.
+**Important:** `app.py` loads the five trained models from the `models/` folder. The MLP, CNN A, CNN B and CNN C models are included in this repository. The ResNet50 model (~95 MB) is not versioned: place `resnet50_cifar10.keras` in `models/resnet50/` (download it from the repository's Releases, or retrain it with the notebook) before starting the application.
+
+## Where Files Are Stored
+
+| The code reads / writes | Location |
+|---|---|
+| CIFAR-10 batches | `data/raw/cifar-10-batches-py/` |
+| Trained models (`.keras`) | `models/<model>/` |
+| Histories and metrics (`.joblib`) | `results/metrics/<model>/` |
+| Curves and comparison charts (`.png`) | `results/figures/` |
+| Streamlit app | `app/app.py` |
 
 ## What I Learned
 
@@ -98,11 +135,8 @@ streamlit run app.py
 
 ## Future Improvements
 
-- Add model performance visualizations
 - Improve the deployment workflow
-- Provide access to trained model weights
+- Provide access to the ResNet50 model weights through GitHub Releases
 - Add more evaluation metrics and error analysis
-
----
 
 Developed as a deep learning portfolio project focused on image classification and model comparison.
